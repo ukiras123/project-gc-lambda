@@ -1,24 +1,23 @@
-const Sequelize = require("sequelize");
 
 module.exports = (sequelize, type) => {
   return sequelize.define('user', {
     id: {
-      type: Sequelize.INTEGER,
+      type: type.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
     membershipId: {
-      type: Sequelize.STRING,
+      type: type.STRING,
       allowNull: false,
       unique: {
         args: 'membershipId',
         msg: 'The membershipId is already taken!'
      }
     },
-    firstName: Sequelize.STRING,
-    lastName: Sequelize.STRING,
+    firstName: type.STRING,
+    lastName: type.STRING,
     email: {
-      type: Sequelize.STRING,
+      type: type.STRING,
       validate: {
         isEmail: true
       },
@@ -28,9 +27,9 @@ module.exports = (sequelize, type) => {
      }
     },
     phone: { 
-      type: Sequelize.INTEGER,
+      type: type.INTEGER,
     },
-    dob: Sequelize.STRING,
-    profilePic: Sequelize.STRING
+    dob: type.STRING,
+    profilePic: type.STRING
   })
 }

@@ -10,3 +10,5 @@ variables.env
 secrets.json
 
 .vscode
+
+.idea
