@@ -18,55 +18,55 @@ module.exports.healthCheck = async () => {
 
 module.exports.create = async (event) => {
   try {
-    const { User } = await connectToDatabase();
-    const user = await User.create(JSON.parse(event.body));
+    const { Member } = await connectToDatabase();
+    const member = await Member.create(JSON.parse(event.body));
     return {
       statusCode: 201,
-      body: JSON.stringify(user)
+      body: JSON.stringify(member)
     };
   } catch (err) {
-    console.log(`User not created: ${JSON.stringify(err)}`);
+    console.log(`Member not created: ${JSON.stringify(err)}`);
     return {
       statusCode: err.statusCode || 400,
       headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify({ errorMessage: 'Could not create the user.', detail: err })
+      body: JSON.stringify({ errorMessage: 'Could not create the member.', detail: err })
     };
   }
 };
 
 module.exports.getOne = async (event) => {
   try {
-    const { User } = await connectToDatabase();
-    const user = await User.findById(event.pathParameters.id);
-    if (!user) throw new HTTPError(404, `User with id: ${event.pathParameters.id} was not found`);
+    const { Member } = await connectToDatabase();
+    const member = await Member.findById(event.pathParameters.memberId);
+    if (!member) throw new HTTPError(404, `Member with id: ${event.pathParameters.memberId} was not found`);
     return {
       statusCode: 200,
-      body: JSON.stringify(user)
+      body: JSON.stringify(member)
     };
   } catch (err) {
     console.log(JSON.stringify(err));
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify({ errorMessage: 'Could not fetch the user.' , detail: err })
+      body: JSON.stringify({ errorMessage: 'Could not fetch the member.', detail: err })
     };
   }
 };
 
 module.exports.getAll = async () => {
   try {
-    const { User } = await connectToDatabase();
-    const users = await User.findAll();
+    const { Member } = await connectToDatabase();
+    const members = await Member.findAll();
     return {
       statusCode: 200,
-      body: JSON.stringify(users)
+      body: JSON.stringify(members)
     };
   } catch (err) {
     console.log(JSON.stringify(err));
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify({ errorMessage: 'Could not fetch the user.', detail: err })
+      body: JSON.stringify({ errorMessage: 'Could not fetch the member.', detail: err })
     };
   }
 };
@@ -74,48 +74,47 @@ module.exports.getAll = async () => {
 module.exports.update = async (event) => {
   try {
     const input = JSON.parse(event.body);
-    const { User } = await connectToDatabase();
-    const user = await User.findById(event.pathParameters.id);
-    if (!user) throw new HTTPError(404, `User with id: ${event.pathParameters.id} was not found`);
+    const { Member } = await connectToDatabase();
+    const member = await Member.findById(event.pathParameters.memberId);
+    if (!member) throw new HTTPError(404, `Member with id: ${event.pathParameters.memberId} was not found`);
 
-    if (input.membershipId) user.membershipId = input.membershipId;
-    if (input.firstName) user.firstName = input.firstName;
-    if (input.lastName) user.lastName = input.lastName;
-    if (input.email) user.email = input.email;
-    if (input.phone) user.phone = input.phone;
-    if (input.dob) user.dob = input.dob;
-    if (input.profilePic) user.profilePic = input.profilePic;
-    await user.save();
+    if (input.firstName) member.firstName = input.firstName;
+    if (input.lastName) member.lastName = input.lastName;
+    if (input.email) member.email = input.email;
+    if (input.phone) member.phone = input.phone;
+    if (input.dob) member.dob = input.dob;
+    if (input.profilePic) member.profilePic = input.profilePic;
+    await member.save();
     return {
       statusCode: 200,
-      body: JSON.stringify(user)
+      body: JSON.stringify(member)
     };
   } catch (err) {
     console.log(JSON.stringify(err));
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify({ errorMessage: 'Could not update the user.' , detail: err })
+      body: JSON.stringify({ errorMessage: 'Could not update the member.', detail: err })
     };
   }
 };
 
 module.exports.destroy = async (event) => {
   try {
-    const { User } = await connectToDatabase();
-    const user = await User.findById(event.pathParameters.id);
-    if (!user) throw new HTTPError(404, `User with id: ${event.pathParameters.id} was not found`);
-    await user.destroy();
+    const { Member } = await connectToDatabase();
+    const member = await Member.findById(event.pathParameters.memberId);
+    if (!member) throw new HTTPError(404, `Member with id: ${event.pathParameters.memberId} was not found`);
+    await member.destroy();
     return {
       statusCode: 200,
-      body: JSON.stringify(user)
+      body: JSON.stringify(member)
     };
   } catch (err) {
     console.log(JSON.stringify(err));
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify({ errorMessage: 'Could not delete the user.', detail: err  })
+      body: JSON.stringify({ errorMessage: 'Could not delete the member.', detail: err })
     };
   }
 };

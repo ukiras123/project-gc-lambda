@@ -1,16 +1,12 @@
 
 module.exports = (sequelize, type) => {
-  return sequelize.define('user', {
-    id: {
-      type: type.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    membershipId: {
+  return sequelize.define('member', {
+    memberId: {
       type: type.STRING,
+      primaryKey: true,
       allowNull: false,
       unique: {
-        args: 'membershipId',
+        args: 'memberId',
         msg: 'The membershipId is already taken!'
       }
     },

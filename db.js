@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const UserModel = require('./models/User');
+const MemberModel = require('./models/Member');
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -11,8 +11,8 @@ const sequelize = new Sequelize(
     operatorsAliases: false
   }
 );
-const User = UserModel(sequelize, Sequelize);
-const Models = { User };
+const Member = MemberModel(sequelize, Sequelize);
+const Models = { Member };
 const connection = {};
 
 module.exports = async () => {
