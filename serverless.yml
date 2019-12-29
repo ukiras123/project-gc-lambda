@@ -1,4 +1,4 @@
-service: project-gc
+service: project-gc-society
 
 custom:
   secrets: ${file(secrets.json)}

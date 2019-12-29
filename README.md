@@ -3,3 +3,6 @@
 
 ### Deploy
 - `sls deploy`
+
+### Local
+- `npm run offline`

@@ -46,7 +46,7 @@ module.exports.getOne = async (event) => {
   } catch (err) {
     console.log(JSON.stringify(err));
     let errMsg = 'Could not fetch the member.';
-    errMsg = (err.message) ? `${errMsg} - ${err.message};` : errMsg;
+    errMsg = (err.message) ? err.message : errMsg;
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
