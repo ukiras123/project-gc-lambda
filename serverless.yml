@@ -36,35 +36,35 @@ functions:
     handler: handler.create
     events:
       - http:
-          path: users
+          path: members
           method: post
           cors: true
   getOne:
     handler: handler.getOne
     events:
       - http:
-          path: users/{id}
+          path: members/{memberId}
           method: get
           cors: true
   getAll:
     handler: handler.getAll
     events:
      - http:
-         path: users
+         path: members
          method: get
          cors: true
   update:
     handler: handler.update
     events:
      - http:
-         path: users/{id}
+         path: members/{memberId}
          method: put
          cors: true
   destroy:
     handler: handler.destroy
     events:
      - http:
-         path: users/{id}
+         path: members/{memberId}
          method: delete
          cors: true
 
