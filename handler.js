@@ -29,7 +29,7 @@ module.exports.create = async (event) => {
     return {
       statusCode: err.statusCode || 400,
       headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify({ errorMessage: 'Could not create the member.', detail: err })
+      body: JSON.stringify({ errorMessage: 'Could not create the member. Make sure memberId and email is unique.', detail: err })
     };
   }
 };
@@ -45,10 +45,12 @@ module.exports.getOne = async (event) => {
     };
   } catch (err) {
     console.log(JSON.stringify(err));
+    let errMsg = 'Could not fetch the member.';
+    errMsg = (err.message) ? `${errMsg} - ${err.message};` : errMsg;
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify({ errorMessage: 'Could not fetch the member.', detail: err })
+      body: JSON.stringify({ errorMessage: errMsg, detail: err })
     };
   }
 };
@@ -66,7 +68,7 @@ module.exports.getAll = async () => {
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify({ errorMessage: 'Could not fetch the member.', detail: err })
+      body: JSON.stringify({ errorMessage: 'Could not fetch the members.', detail: err })
     };
   }
 };
@@ -91,10 +93,12 @@ module.exports.update = async (event) => {
     };
   } catch (err) {
     console.log(JSON.stringify(err));
+    let errMsg = 'Could not update the member.';
+    errMsg = (err.message) ? `${errMsg} - ${err.message};` : errMsg;
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify({ errorMessage: 'Could not update the member.', detail: err })
+      body: JSON.stringify({ errorMessage: errMsg, detail: err })
     };
   }
 };
@@ -111,10 +115,12 @@ module.exports.destroy = async (event) => {
     };
   } catch (err) {
     console.log(JSON.stringify(err));
+    let errMsg = 'Could not delete the member.';
+    errMsg = (err.message) ? `${errMsg} - ${err.message};` : errMsg;
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify({ errorMessage: 'Could not delete the member.', detail: err })
+      body: JSON.stringify({ errorMessage: errMsg, detail: err })
     };
   }
 };
