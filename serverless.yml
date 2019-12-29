@@ -5,6 +5,20 @@ custom:
 
 provider:
   name: aws
+  iamRoleStatements:
+  - Effect: 'Allow'
+    Action:
+      - s3:GetBucketLocation
+      - s3:GetObject
+      - s3:ListBucket
+      - s3:ListBucketMultipartUploads
+      - s3:ListMultipartUploadParts
+      - s3:AbortMultipartUpload
+      - s3:CreateBucket
+      - s3:PutObject
+    Resource:
+      - arn:aws:s3:::gautam-chaulagain-asset
+      - arn:aws:s3:::gautam-chaulagain-asset/*
   runtime: nodejs8.10
   timeout: 30
   stage: ${self:custom.secrets.NODE_ENV}
@@ -67,6 +81,13 @@ functions:
          path: members/{memberId}
          method: delete
          cors: true
+  fileUpload:
+    handler: fileHandler.getPresignedPostData
+    events:
+    - http:
+        path: fileUpload
+        method: post
+        cors: true
 
 plugins:
   - serverless-offline
