@@ -21,15 +21,15 @@ module.exports.create = async (event) => {
     const { User } = await connectToDatabase();
     const user = await User.create(JSON.parse(event.body));
     return {
-      statusCode: 200,
+      statusCode: 201,
       body: JSON.stringify(user)
     };
   } catch (err) {
-    console.log(JSON.stringify(err));
+    console.log(`User not created: ${JSON.stringify(err)}`);
     return {
-      statusCode: err.statusCode || 500,
+      statusCode: err.statusCode || 400,
       headers: { 'Content-Type': 'text/json' },
-      body: { errorMessage: 'Could not create the user.' }
+      body: JSON.stringify({ errorMessage: 'Could not create the user.', detail: err })
     };
   }
 };
@@ -48,7 +48,7 @@ module.exports.getOne = async (event) => {
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: { errorMessage: 'Could not fetch the user.' }
+      body: JSON.stringify({ errorMessage: 'Could not fetch the user.' , detail: err })
     };
   }
 };
@@ -66,7 +66,7 @@ module.exports.getAll = async () => {
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: { errorMessage: 'Could not fetch the user.' }
+      body: JSON.stringify({ errorMessage: 'Could not fetch the user.', detail: err })
     };
   }
 };
@@ -85,7 +85,6 @@ module.exports.update = async (event) => {
     if (input.phone) user.phone = input.phone;
     if (input.dob) user.dob = input.dob;
     if (input.profilePic) user.profilePic = input.profilePic;
-
     await user.save();
     return {
       statusCode: 200,
@@ -96,7 +95,7 @@ module.exports.update = async (event) => {
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: { errorMessage: 'Could not update the user.' }
+      body: JSON.stringify({ errorMessage: 'Could not update the user.' , detail: err })
     };
   }
 };
@@ -116,7 +115,7 @@ module.exports.destroy = async (event) => {
     return {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/json' },
-      body: { errorMessage: 'Could not delete the user.' }
+      body: JSON.stringify({ errorMessage: 'Could not delete the user.', detail: err  })
     };
   }
 };
