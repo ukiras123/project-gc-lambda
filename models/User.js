@@ -12,7 +12,7 @@ module.exports = (sequelize, type) => {
       unique: {
         args: 'membershipId',
         msg: 'The membershipId is already taken!'
-     }
+      }
     },
     firstName: type.STRING,
     lastName: type.STRING,
@@ -24,12 +24,12 @@ module.exports = (sequelize, type) => {
       unique: {
         args: 'email',
         msg: 'The email is already taken!'
-     }
+      }
     },
-    phone: { 
-      type: type.INTEGER,
+    phone: {
+      type: type.INTEGER
     },
     dob: type.STRING,
     profilePic: type.STRING
-  })
-}
+  });
+};
