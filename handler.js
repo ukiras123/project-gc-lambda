@@ -8,11 +8,18 @@ function HTTPError (statusCode, message) {
   return error;
 }
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Credentials': true,
+  'Content-Type': 'text/json'
+};
+
 module.exports.healthCheck = async () => {
   await connectToDatabase();
   console.log('Connection successful.');
   return {
     statusCode: 200,
+    headers,
     body: JSON.stringify({ message: 'Connection successful.' })
   };
 };
@@ -23,13 +30,14 @@ module.exports.create = async (event) => {
     const member = await Member.create(JSON.parse(event.body));
     return {
       statusCode: 201,
+      headers,
       body: JSON.stringify(member)
     };
   } catch (err) {
     console.log(`Member not created: ${JSON.stringify(err)}`);
     return {
       statusCode: err.statusCode || 400,
-      headers: { 'Content-Type': 'text/json' },
+      headers,
       body: JSON.stringify({ errorMessage: 'Could not create the member. Make sure memberId and email is unique.', detail: err })
     };
   }
@@ -42,6 +50,7 @@ module.exports.getOne = async (event) => {
     if (!member) throw new HTTPError(404, `Member with id: ${event.pathParameters.memberId} was not found`);
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify(member)
     };
   } catch (err) {
@@ -50,7 +59,7 @@ module.exports.getOne = async (event) => {
     errMsg = (err.message) ? err.message : errMsg;
     return {
       statusCode: err.statusCode || 500,
-      headers: { 'Content-Type': 'text/json' },
+      headers,
       body: JSON.stringify({ errorMessage: errMsg, detail: err })
     };
   }
@@ -62,13 +71,14 @@ module.exports.getAll = async () => {
     const members = await Member.findAll();
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify(members)
     };
   } catch (err) {
     console.log(JSON.stringify(err));
     return {
       statusCode: err.statusCode || 500,
-      headers: { 'Content-Type': 'text/json' },
+      headers,
       body: JSON.stringify({ errorMessage: 'Could not fetch the members.', detail: err })
     };
   }
@@ -90,6 +100,7 @@ module.exports.update = async (event) => {
     await member.save();
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify(member)
     };
   } catch (err) {
@@ -98,7 +109,7 @@ module.exports.update = async (event) => {
     errMsg = (err.message) ? `${errMsg} - ${err.message};` : errMsg;
     return {
       statusCode: err.statusCode || 500,
-      headers: { 'Content-Type': 'text/json' },
+      headers,
       body: JSON.stringify({ errorMessage: errMsg, detail: err })
     };
   }
@@ -112,6 +123,7 @@ module.exports.destroy = async (event) => {
     await member.destroy();
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify(member)
     };
   } catch (err) {
@@ -120,7 +132,7 @@ module.exports.destroy = async (event) => {
     errMsg = (err.message) ? `${errMsg} - ${err.message};` : errMsg;
     return {
       statusCode: err.statusCode || 500,
-      headers: { 'Content-Type': 'text/json' },
+      headers,
       body: JSON.stringify({ errorMessage: errMsg, detail: err })
     };
   }
