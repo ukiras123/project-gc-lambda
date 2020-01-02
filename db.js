@@ -8,7 +8,12 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-    operatorsAliases: false
+    operatorsAliases: false,
+    define: {
+      charset: 'utf8',
+      collate: 'utf8_general_ci',
+      timestamps: true
+    }
   }
 );
 const Member = MemberModel(sequelize, Sequelize);

@@ -27,5 +27,9 @@ module.exports = (sequelize, type) => {
     },
     dob: type.STRING,
     profilePic: type.STRING
-  });
+  }, {
+    charset: 'utf8',
+    collate: 'utf8_unicode_ci'
+  }
+  );
 };
