@@ -10,23 +10,18 @@ module.exports = (sequelize, type) => {
         msg: 'The membershipId is already taken!'
       }
     },
-    firstName: type.STRING,
-    lastName: type.STRING,
-    email: {
-      type: type.STRING,
-      validate: {
-        isEmail: true
-      },
-      unique: {
-        args: 'email',
-        msg: 'The email is already taken!'
-      }
-    },
-    phone: {
-      type: type.INTEGER
-    },
+    profilePic: type.STRING,
+    name: type.STRING,
     dob: type.STRING,
-    profilePic: type.STRING
+    address: type.JSON,
+    phone: type.JSON,
+    occupation: type.STRING,
+    typeOfMembership: type.STRING,
+    familyHistory: type.JSON,
+    maritalStatus: type.String,
+    partnerDetail: type.JSON,
+    kidsCount: type.JSON,
+    kidsDetail: type.JSON
   }, {
     charset: 'utf8',
     collate: 'utf8_unicode_ci'

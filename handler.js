@@ -90,13 +90,18 @@ module.exports.update = async (event) => {
     const { Member } = await connectToDatabase();
     const member = await Member.findById(event.pathParameters.memberId);
     if (!member) throw new HTTPError(404, `Member with id: ${event.pathParameters.memberId} was not found`);
-
-    if (input.firstName) member.firstName = input.firstName;
-    if (input.lastName) member.lastName = input.lastName;
-    if (input.email) member.email = input.email;
-    if (input.phone) member.phone = input.phone;
-    if (input.dob) member.dob = input.dob;
     if (input.profilePic) member.profilePic = input.profilePic;
+    if (input.name) member.name = input.name;
+    if (input.dob) member.dob = input.dob;
+    if (input.address) member.address = input.address;
+    if (input.phone) member.phone = input.phone;
+    if (input.occupation) member.occupation = input.occupation;
+    if (input.typeOfMembership) member.typeOfMembership = input.typeOfMembership;
+    if (input.familyHistory) member.familyHistory = input.familyHistory;
+    if (input.maritalStatus) member.maritalStatus = input.maritalStatus;
+    if (input.partnerDetail) member.partnerDetail = input.partnerDetail;
+    if (input.kidsCount) member.kidsCount = input.kidsCount;
+    if (input.kidsDetail) member.kidsDetail = input.kidsDetail;
     await member.save();
     return {
       statusCode: 200,
