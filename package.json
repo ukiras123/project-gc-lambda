@@ -19,7 +19,7 @@
     "serverless-offline": "^3.33.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.596.0",
+    "aws-sdk": "^2.814.0",
     "mime": "^2.4.4",
     "mysql2": "^1.7.0",
     "sequelize": "^4.44.3",
